@@ -1,0 +1,10 @@
+coverage:
+  status:
+    project: off
+    patch: off
+codecov:
+  bot: "codecov-io"
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: false
