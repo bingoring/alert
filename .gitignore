@@ -1,0 +1,83 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+dist
+tmp
+/out-tsc
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# data-requester
+*key.json
+*/data-collector/src/**/example.ts
+*/data-collector/src/**/*example.test.spec.ts
+# config file
+config.json
+hana.config.json
+config.default.json
+
+# anywhere
+cert.pem
+private.pem
+aws_signing_helper
+
+# log
+/logs
+
+# logstash
+/logstash-config
+
+# vscode
+/.vscode
+
+# migration
+update.temp
+
+# kb
+new_org.dat
+new_user.dat
+user.dat
+org.dat
+
+# python
+.cache/
+**/.coverage
+**/.pytest_cache/
+**/__pycache__/
+reports/
+
+# nx
+.nx
+
+tempo-tar-dir/
