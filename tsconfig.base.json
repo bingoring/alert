@@ -22,10 +22,13 @@
         "baseUrl": ".",
         "strict": true,
         "paths": {
-            "@root/user/*": ["product/user/src/*"],
-            "@root/schedule/*": ["product/schedule/src/*"],
             "@root/common/*": ["module/common/src/*"],
             "@root/log/*": ["module/log/src/*"],
+            "@root/nest/*": ["module/nest/src/*"],
+            "@root/pg/*": ["module/pg/src/*"],
+
+            "@root/user/*": ["product/user/src/*"],
+            "@root/schedule/*": ["product/schedule/src/*"],
         }
     },
     "exclude": ["node_modules", "tmp"]

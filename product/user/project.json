@@ -1,0 +1,73 @@
+{
+    "name": "user",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "product/user/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/webpack:webpack",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/product/user",
+                "main": "product/user/src/main.ts",
+                "tsConfig": "product/user/tsconfig.app.json",
+                "isolatedConfig": true,
+                "webpackConfig": "product/user/webpack.config.js",
+                "generatePackageJson": true
+            },
+            "configurations": {
+                "development": {},
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "user:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "user:build:development"
+                },
+                "production": {
+                    "buildTarget": "user:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["product/user/**/*.ts"]
+            }
+        },
+        "docker-build": {
+            "dependsOn": ["build"],
+            "command": "docker build -f product/user/Dockerfile . -t tatum_backend_user:latest"
+        },
+        "docker-push": {
+            "dependsOn": ["docker-build"],
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "docker tag tatum_backend_user:latest $REGISTRY/tatum_backend_user:latest",
+                    "docker tag tatum_backend_user:latest $REGISTRY/tatum_backend_user:$IMAGE_TAG",
+                    "docker push $REGISTRY/tatum_backend_user --all-tags"
+                ]
+            }
+        },
+        "pm2-start": {
+            "dependsOn": ["build"],
+            "command": "pm2 start --name user dist/product/user/main.js"
+        },
+        "pm2-reload": {
+            "dependsOn": ["build"],
+            "command": "pm2 reload user"
+        }
+    },
+    "tags": []
+}
