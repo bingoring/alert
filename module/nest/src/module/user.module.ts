@@ -11,9 +11,9 @@ const userDataFactory = {
     scope: Scope.REQUEST,
     useFactory: async (req: Request) => {
         const headers = req.headers;
-        const tenantId = headers['x-tenant-id'];
-        const loginId = headers['x-login-id'];
-        const userId = headers['x-user-id'];
+        const tenantId = headers['tenant-id'];
+        const loginId = headers['login-id'];
+        const userId = headers['user-id'];
 
         if (typeof tenantId !== 'string') {
             throw new UndefinedTenantIdHeaderError();
