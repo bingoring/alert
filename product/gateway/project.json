@@ -1,0 +1,73 @@
+{
+    "name": "gateway",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "product/gateway/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/webpack:webpack",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/product/gateway",
+                "main": "product/gateway/src/main.ts",
+                "tsConfig": "product/gateway/tsconfig.app.json",
+                "isolatedConfig": true,
+                "webpackConfig": "product/gateway/webpack.config.js",
+                "generatePackageJson": true
+            },
+            "configurations": {
+                "development": {},
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "gateway:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "gateway:build:development"
+                },
+                "production": {
+                    "buildTarget": "gateway:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["product/gateway/**/*.ts"]
+            }
+        },
+        "docker-build": {
+            "dependsOn": ["build"],
+            "command": "docker build -f product/gateway/Dockerfile . -t tatum_backend_gateway:latest"
+        },
+        "docker-push": {
+            "dependsOn": ["docker-build"],
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "docker tag tatum_backend_gateway:latest $REGISTRY/tatum_backend_gateway:latest",
+                    "docker tag tatum_backend_gateway:latest $REGISTRY/tatum_backend_gateway:$IMAGE_TAG",
+                    "docker push $REGISTRY/tatum_backend_gateway --all-tags"
+                ]
+            }
+        },
+        "pm2-start": {
+            "dependsOn": ["build"],
+            "command": "pm2 start --name gateway dist/product/gateway/main.js"
+        },
+        "pm2-reload": {
+            "dependsOn": ["build"],
+            "command": "pm2 reload gateway"
+        }
+    },
+    "tags": []
+}
