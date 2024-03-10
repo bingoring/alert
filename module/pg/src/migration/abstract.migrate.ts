@@ -22,7 +22,7 @@ export abstract class AbstractMigrate {
             try {
                 await this.queryRunner.query(query);
             } catch (e) {
-                console.log((e as Error).message);
+                log.error((e as Error).message);
             }
         }
 

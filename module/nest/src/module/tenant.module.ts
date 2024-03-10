@@ -12,7 +12,7 @@ const connectionFactory = {
     scope: Scope.REQUEST,
     useFactory: async (req: Request) => {
         const headers = req.headers;
-        const tenantId = headers['x-tenant-id'];
+        const tenantId = headers['tenant-id'];
 
         if (typeof tenantId !== 'string') {
             throw new UndefinedTenantIdHeaderError();

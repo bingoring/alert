@@ -1,10 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from 'typeorm';
 import { DefaultEntity } from '../default/default.entity';
 import { v4 } from 'uuid';
-import { AgentApiKeyEntity } from '../agent/apiKey.entity';
-import { ReportStorageEntity } from '../report-storage/reportStorage.entity';
-import { PolicyResultCommentEntity } from '../event/policyResultComment.entity';
 import { GroupEntity } from './group.entity';
+import { AlarmEntity } from '../alarm/alarm.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity extends DefaultEntity {
@@ -35,32 +33,8 @@ export class UserEntity extends DefaultEntity {
     @Column({ name: 'password', type: 'varchar', nullable: true })
     password!: string;
 
-    @Column({ name: 'agreements', type: 'jsonb' })
-    agreements!: any;
-
-    @Column({ name: 'login_types', type: 'jsonb' })
-    loginTypes!: any;
-
     @Column({ name: 'is_activated', type: 'boolean', nullable: true })
     isActivated!: boolean;
-
-    @Column({ name: 'mfa', type: 'jsonb' })
-    mfa!: any;
-
-    @Column({ name: 'active_role_id', type: 'uuid', nullable: true })
-    activeRoleId!: string;
-
-    @Column({ name: 'position', type: 'varchar', nullable: true })
-    position?: string;
-
-    @OneToMany(() => AgentApiKeyEntity, (obj) => obj.user)
-    agentApiKeyList!: AgentApiKeyEntity[];
-
-    @OneToMany(() => ReportStorageEntity, (obj) => obj.user)
-    reportStorageList!: ReportStorageEntity[];
-
-    @OneToMany(() => PolicyResultCommentEntity, (obj) => obj.user)
-    policyResultCommentList!: PolicyResultCommentEntity[];
 
     @ManyToMany(() => GroupEntity, (obj) => obj.userList)
     @JoinTable({
@@ -75,4 +49,7 @@ export class UserEntity extends DefaultEntity {
         },
     })
     groupList?: GroupEntity[];
+
+    @OneToMany(() => AlarmEntity, (obj) => obj.user)
+    alarmList!: AlarmEntity[];
 }

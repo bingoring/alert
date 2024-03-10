@@ -1,7 +1,7 @@
 import { ValueOfType } from '@root/common/type/utility.type';
 
 export const ServerNameMap = {
-    user: 'user',
+    gateway: 'gateway',
     schedule: 'schedule',
 } as const;
 

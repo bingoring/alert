@@ -27,7 +27,7 @@
             "@root/nest/*": ["module/nest/src/*"],
             "@root/pg/*": ["module/pg/src/*"],
 
-            "@root/user/*": ["product/user/src/*"],
+            "@root/gateway/*": ["product/gateway/src/*"],
             "@root/schedule/*": ["product/schedule/src/*"],
         }
     },
