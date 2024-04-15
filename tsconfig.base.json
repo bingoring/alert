@@ -26,6 +26,7 @@
             "@root/log/*": ["module/log/src/*"],
             "@root/nest/*": ["module/nest/src/*"],
             "@root/pg/*": ["module/pg/src/*"],
+            "@root/message-queue/*": ["module/message-queue/src/*"],
 
             "@root/gateway/*": ["product/gateway/src/*"],
             "@root/schedule/*": ["product/schedule/src/*"],

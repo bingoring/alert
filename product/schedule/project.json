@@ -1,0 +1,73 @@
+{
+    "name": "schedule",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "product/schedule/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/webpack:webpack",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/product/schedule",
+                "main": "product/schedule/src/main.ts",
+                "tsConfig": "product/schedule/tsconfig.app.json",
+                "isolatedConfig": true,
+                "webpackConfig": "product/schedule/webpack.config.js",
+                "generatePackageJson": true
+            },
+            "configurations": {
+                "development": {},
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "schedule:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "schedule:build:development"
+                },
+                "production": {
+                    "buildTarget": "schedule:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["product/schedule/**/*.ts"]
+            }
+        },
+        "docker-build": {
+            "dependsOn": ["build"],
+            "command": "docker build -f product/schedule/Dockerfile . -t tatum_backend_schedule:latest"
+        },
+        "docker-push": {
+            "dependsOn": ["docker-build"],
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "docker tag tatum_backend_schedule:latest $REGISTRY/tatum_backend_schedule:latest",
+                    "docker tag tatum_backend_schedule:latest $REGISTRY/tatum_backend_schedule:$IMAGE_TAG",
+                    "docker push $REGISTRY/tatum_backend_schedule --all-tags"
+                ]
+            }
+        },
+        "pm2-start": {
+            "dependsOn": ["build"],
+            "command": "pm2 start --name schedule dist/product/schedule/main.js"
+        },
+        "pm2-reload": {
+            "dependsOn": ["build"],
+            "command": "pm2 reload schedule"
+        }
+    },
+    "tags": []
+}
