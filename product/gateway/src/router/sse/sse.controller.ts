@@ -3,6 +3,8 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SseInterceptor } from '@root/gateway/interceptor/sse.interceptor';
 import { SessionType } from '../sign-up/session.type';
 import { SseResponseDto } from './dto/sse.dto';
+import { SseService } from './sse.service';
+import { Observable } from 'rxjs';
 
 @ApiTags('Sse')
 @Injectable()
@@ -13,7 +15,7 @@ export class SseController {
 
     @Sse()
     @ApiOperation({ summary: 'alarm sse' })
-    public async sse(@Session() session: SessionType): Promise<SseResponseDto> {
+    public async sse(@Session() session: SessionType): Promise<Observable<SseResponseDto>> {
         return await this.sseService.sse(session.organizationId);
     }
 }
