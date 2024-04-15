@@ -11,8 +11,8 @@ export class AlarmEntity extends DefaultEntity {
     @Column({ name: 'alarm_name', type: 'varchar', nullable: true })
     alarmName?: string;
 
-    @Column({ name: 'alarm_time', type: 'varchar' })
-    alarmTime!: string;
+    @Column({ name: 'alarm_time', type: 'datetime' })
+    alarmTime!: Date;
 
     @Column({ name: 'alarm_type', type: 'varchar' })
     alarmType!: string;
