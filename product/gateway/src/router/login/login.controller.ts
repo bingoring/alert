@@ -10,7 +10,7 @@ export class LoginController {
 
     @Post()
     @ApiResponse({ type: LoginPostResponseDto })
-    public async login(@Request() req): Promise<LoginPostResponseDto> {
+    public async login(@Request() req: any): Promise<LoginPostResponseDto> {
         const result = await this.loginService.login(body);
         return result;
     }
