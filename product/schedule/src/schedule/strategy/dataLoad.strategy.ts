@@ -7,7 +7,7 @@ export abstract class AbstractDataLoadStrategy {
     public async exec(dataSource: DataSource): Promise<void> {
         try {
             await this.computeAndSave(dataSource, this.postLoadStrategy);
-            log.debug(`Statistics Data Store succeed. (target: ${this.targetName})`);
+            log.debug(`Schedule process succeed. (target: ${this.targetName})`);
         } catch (err) {
             const errMsg = err instanceof Error ? err.message : String(err);
             throw new LoadDashboardDataException(this.targetName, errMsg);
