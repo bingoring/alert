@@ -17,7 +17,7 @@ export async function initConfig() {
         }
 
         const initConfig = {
-            api: DefaultConfig.api,
+            gateway: DefaultConfig.gateway,
             isConfigUnlimitedRequests: DefaultConfig.isConfigUnlimitedRequests,
         };
         try {
@@ -34,9 +34,9 @@ export async function initConfig() {
     })();
 
     const apiConfig = await (async () => {
-        if (serverName !== ServerNameMap.api) {
+        if (serverName !== ServerNameMap.gateway) {
             const Second = 1000;
-            const url = `http://${localConfig?.api?.host}:${localConfig?.api?.port}`;
+            const url = `http://${localConfig?.gateway?.host}:${localConfig?.gateway?.port}`;
             let count = 1;
             while (count <= 10 || localConfig.isConfigUnlimitedRequests) {
                 console.debug(`env is requested (${count++})`);

@@ -1,21 +1,21 @@
 {
-    "name": "nest",
+    "name": "monitor",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "module/nest/src",
+    "sourceRoot": "module/monitor/src",
     "projectType": "library",
     "targets": {
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["module/nest/**/*.ts"]
+                "lintFilePatterns": ["module/monitor/**/*.ts"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "module/nest/jest.config.ts",
+                "jestConfig": "module/monitor/jest.config.ts",
                 "passWithNoTests": true
             },
             "configurations": {
