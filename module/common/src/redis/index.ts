@@ -1,4 +1,5 @@
-import { Cluster, NatMap, Redis } from 'ioredis';
+import { Cluster, NatMap } from 'ioredis';
+import { MsgPackRedis } from './redisWithMsgPack';
 
 export async function initRedis() {
     const errorCodeList = ['ECONNREFUSED', 'EHOSTUNREACH', 'ETIMEDOUT'];
@@ -45,5 +46,5 @@ function getClient() {
 
     const [nodeInfo] = nodeList;
 
-    return new Redis({ port: nodeInfo.port, host: nodeInfo.host, password: env.redis.passwd });
+    return new MsgPackRedis({ port: nodeInfo.port, host: nodeInfo.host, password: env.redis.passwd });
 }
